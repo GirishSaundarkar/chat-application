@@ -1,8 +1,10 @@
 import React from "react";
 import assets, { userDummyData } from "../assets/assets";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = ({ selectedUser, setSelectedUser }) => {
+  const navigate = useNavigate();
+
   return (
     <div
       className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${
@@ -20,7 +22,7 @@ const SideBar = ({ selectedUser, setSelectedUser }) => {
             />
             <div>
               <p
-                onClick={() => Navigate("/profile")}
+                onClick={() => navigate("/profile")}
                 className="cursor-pointer text-sm"
               >
                 Edit Profile
@@ -41,14 +43,12 @@ const SideBar = ({ selectedUser, setSelectedUser }) => {
         </div>
 
         <div className="flex flex-col">
-          {userDummyData.map((user, index) => {
+          {userDummyData.map((user, index) => (
             <div
-              onClick={() => {
-                setSelectedUser(user);
-              }}
+              onClick={() => setSelectedUser(user)}
               key={index}
               className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${
-                selectedUser?._id === user._id && "bg-[#282142]/50"
+                selectedUser?._id === user._id ? "bg-[#282142]/50" : ""
               }`}
             >
               <img
@@ -65,12 +65,12 @@ const SideBar = ({ selectedUser, setSelectedUser }) => {
                 )}
               </div>
               {index > 2 && (
-                <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center rounded-full bg-violet-500/50">
+                <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50">
                   {index}
                 </p>
               )}
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </div>
